@@ -1,2 +1,12 @@
-// currently no-op
-// placeholder to test how nodejs can make tcp connections using a sock5 proxy running at localhost:1055
+const http = require('http');
+
+const PORT = process.env.PORT || 8080;
+
+const server = http.createServer((req, res) => {
+  res.write('Hello World!');
+  res.end();
+});
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

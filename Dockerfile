@@ -15,7 +15,7 @@ COPY . ./
 
 FROM alpine:latest
 
-RUN apk update && apk add ca-certificates curl && rm -rf /var/cache/apk/*
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
 # Copy binary to production image
 COPY --from=builder /app/start.sh /app/start.sh
