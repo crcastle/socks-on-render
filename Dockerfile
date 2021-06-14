@@ -5,12 +5,6 @@ COPY . ./
 RUN npm install --production
 
 
-# FROM golang:1.16.2-alpine3.13 as builder
-# WORKDIR /app
-# COPY . ./
-# This is where one could build the application code as well.
-
-
 FROM alpine:latest as tailscale
 WORKDIR /app
 COPY . ./
@@ -22,7 +16,7 @@ COPY . ./
 
 FROM alpine:latest
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk update && apk add ca-certificates curl && rm -rf /var/cache/apk/*
 
 # Copy binary to production image
 COPY --from=builder . ./
