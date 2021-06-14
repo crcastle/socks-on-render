@@ -1,6 +1,13 @@
-FROM golang:1.16.2-alpine3.13 as builder
+FROM node:lts-alpine as builder
+ENV NODE_ENV=production
 WORKDIR /app
 COPY . ./
+RUN npm install --production
+
+
+# FROM golang:1.16.2-alpine3.13 as builder
+# WORKDIR /app
+# COPY . ./
 # This is where one could build the application code as well.
 
 
@@ -18,7 +25,7 @@ FROM alpine:latest
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
 # Copy binary to production image
-COPY --from=builder /app/start.sh /app/start.sh
+COPY --from=builder . ./
 COPY --from=tailscale /app/tailscaled /app/tailscaled
 COPY --from=tailscale /app/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale
@@ -31,4 +38,5 @@ RUN chown nonroot:nonroot /var/run/tailscale /var/cache/tailscale /var/lib/tails
 USER nonroot
 
 # Run on container startup.
+WORKDIR /app
 CMD ["/app/start.sh"]
