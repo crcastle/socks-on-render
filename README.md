@@ -1,5 +1,6 @@
+Run Tailscale on Render!
 
-
+This expands upon the [userspace networking](https://tailscale.com/kb/1112/userspace-networking/) feature provided by Tailscale and the kb articles they published about how to use Tailscale on a "serverless" provider like [Heroku](https://tailscale.com/kb/1107/heroku/) or [Google Cloud Run](https://tailscale.com/kb/1108/cloudrun/).
 
 You'll need at least two computers connected to your Tailscale network. One of them will be the application we deploy to Render. The other can be something like your local development machine.
 
@@ -32,9 +33,9 @@ This is being served from your local laptop over the encrypted Wireguard network
 ## Why is this interesting?
 
 - You can create an encrypted private network between any number of computers/servers/processes assuming they have internet access.
-- The encrypted private network is what Wireguard + Tailscale is, but making Wireguard + Tailscale work as part of a Render deploy is difficult. Tailscale normally needs access to Linux's `/dev/net/tun`. That's not available in Render (and Heroku, Google Cloud Run, etc).
+- The encrypted private network is what Wireguard + Tailscale is, but making Wireguard + Tailscale work on a "serverless" or PaaS provider is difficult because Tailscale (and Wireguard) normally need access to Linux's `/dev/net/tun`. That's not available in Render (and Heroku, Google Cloud Run, etc).
 - The communication is encrypted but traveling over the public internet.
-- That encrypted connection is point-to-point, not going through a bastion host or load balancer or similar.
+- That encrypted connection is point-to-point, not going through a bastion host or load balancer or VPN concentrator.
 
 ## FIXME
 
