@@ -5,13 +5,13 @@ You'll need at least two computers connected to your Tailscale network. One of t
 
 ## Setup
 
-1. Install and configure Tailscale on your local development machine.
+1. [Install and configure Tailscale](https://tailscale.com/kb/1017/install/) on your local development machine.
 1. Fork this repo to a GitHub account from which you can deploy to Render.
 1. Create a [new Private Service](https://dashboard.render.com/select-repo?type=pserv) on Render using the forked repo.
 1. Create an Environment Variable named `TAILSCALE_AUTHKEY` for the service and set its value as a new Tailscale "Reusable Key" you generate at https://login.tailscale.com/admin/settings/authkeys (Ephemeral Keys seem like a better option here, but I couldn't get them to work--maybe because Render doesn't support IPv6).
 1. Lastly, clone this repo locally.
 
-## Connect to Render Private Service from your local development machine
+## Demonstrate communication to Render Private Service from your local development machine
 
 1. Ensure you're authenticated and connected to Tailscale on your laptop.
 1. Go to https://login.tailscale.com/admin/machines and get the *Tailscale* IP address of the Render Private Service you just deployed.
@@ -20,7 +20,7 @@ You'll need at least two computers connected to your Tailscale network. One of t
 
 Note that Render's load balancer is not routing this HTTP request to your Private Service. The request is going over an encrypted Wireguard network managed by Tailscale directly to your Render Private Service.
 
-## Connect to your local development machine from Render Private Service
+## Demonstrate communication to your local development machine from Render Private Service
 
 1. From the `socks-on-render` directory that you cloned to your local development machine run `node index.js`. We'll connect to this server from your Render Private Service.
 1. Open the [Render dashboard](https://dashboard.render.com) for the Private Service you deployed and go to the Shell tab.
@@ -31,7 +31,7 @@ This is being served from your local laptop over the encrypted Wireguard network
 
 ## Why is this interesting?
 
-- You can create an encrypted private network between any number of processes assuming they have internet access.
+- You can create an encrypted private network between any number of computers/servers/processes assuming they have internet access.
 - The encrypted private network is what Wireguard + Tailscale is, but making Wireguard + Tailscale work as part of a Render deploy is difficult. Tailscale normally needs access to Linux's `/dev/net/tun`. That's not available in Render (and Heroku, Google Cloud Run, etc).
 - The communication is encrypted but traveling over the public internet.
 - That encrypted connection is point-to-point, not going through a bastion host or load balancer or similar.
