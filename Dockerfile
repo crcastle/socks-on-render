@@ -8,7 +8,7 @@ RUN npm install --production
 FROM alpine:latest as tailscale
 WORKDIR /app
 COPY . ./
-ENV TSFILE=tailscale_1.8.7_amd64.tgz
+ENV TSFILE=tailscale_1.12.1_amd64.tgz
 RUN wget https://pkgs.tailscale.com/stable/${TSFILE} && \
     tar xzf ${TSFILE} --strip-components=1
 COPY . ./
