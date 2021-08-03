@@ -26,6 +26,11 @@ RUN mkdir -p /var/run/tailscale
 RUN mkdir -p /var/cache/tailscale
 RUN mkdir -p /var/lib/tailscale
 
+RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
+RUN chown nonroot:nonroot /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
+
+USER nonroot
+
 # Run on container startup.
 WORKDIR /app
 CMD ["/app/start.sh"]
