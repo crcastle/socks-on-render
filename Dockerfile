@@ -26,6 +26,9 @@ RUN mkdir -p /var/run/tailscale
 RUN mkdir -p /var/cache/tailscale
 RUN mkdir -p /var/lib/tailscale
 
+RUN chown root:root /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
+USER root
+
 # Run on container startup.
 WORKDIR /app
 CMD ["/app/start.sh"]
